@@ -6,6 +6,29 @@ import java.lang.reflect.Method;
 
 public class Binder {
 
+    public static void bind(Object object) {
+        Field[] fields = object.getClass().getFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(Set.class)) {
+                Set annotation = field.getAnnotation(Set.class);
+                if (annotation.intValue() != -1) {
+                    try {
+                        field.set(object, annotation.intValue());
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (!annotation.stringValue().equals("")) {
+                    try {
+                        field.set(object, annotation.stringValue());
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
     public static <T> void bind(Class<T> clazz) {
         // Method Annotations check
         Method[] methods = clazz.getDeclaredMethods();

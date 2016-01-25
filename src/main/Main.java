@@ -11,6 +11,8 @@ public class Main {
         Binder.bind(Main.class);
         Binder.bind(CounterClass.class);
         Binder.bind(CallMethodClass.class);
+
+        new InstanceObject();
     }
 
     @Println
